@@ -16,6 +16,7 @@ public class SessionVoteDTO {
     private Long totalVotes;
     private Long totalYes;
     private Long totalNo;
+    private Boolean isActive;
     private Integer pautaId;
 
     public SessionVoteDTO(Integer id, String description, LocalDateTime limitDate, Long totalVotes, Long totalYes, Long totalNo, Integer pautaId) {
@@ -26,6 +27,7 @@ public class SessionVoteDTO {
         this.totalYes = totalYes == null ? 0 : totalYes;
         this.totalNo = totalNo == null ? 0 : totalNo;
         this.pautaId = pautaId;
+        this.isActive = true;
     }
 
     public SessionVoteDTO(SessionVote sessionVote){
@@ -36,6 +38,7 @@ public class SessionVoteDTO {
         totalYes = sessionVote.getTotalYes() == null ? 0 : sessionVote.getTotalYes();
         totalNo = sessionVote.getTotalNo() == null ? 0 : sessionVote.getTotalNo();
         pautaId = sessionVote.getPauta().getId();
+        isActive = sessionVote.getIsActive();
     }
 
     private LocalDateTime checkDate(LocalDateTime limitDate){

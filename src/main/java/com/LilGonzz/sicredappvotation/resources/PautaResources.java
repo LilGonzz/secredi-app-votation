@@ -18,7 +18,7 @@ public class PautaResources {
     PautaService service;
     @GetMapping
     public ResponseEntity<List<PautaDTO>> getAllPautas(){
-        return ResponseEntity.ok(service.findAllPautas());
+        return ResponseEntity.ok(service.findAllPautasDTO());
     }
     @GetMapping("/{id}")
     public ResponseEntity<PautaDTO> getPautaById(@PathVariable final Integer id){

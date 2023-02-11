@@ -21,7 +21,7 @@ public class AssociateResource {
     AssociateService service;
     @GetMapping
     public ResponseEntity<List<AssociateDTO>> getAllAssociate(){
-            List<AssociateDTO> associates = service.getAllAssociate();
+            List<AssociateDTO> associates = service.getAllAssociateDTO();
             return ResponseEntity.ok(associates);
     }
 

@@ -19,8 +19,11 @@ public class PautaService {
     @Autowired
     PautaRepository repository;
 
-    public List<PautaDTO> findAllPautas(){
+    public List<PautaDTO> findAllPautasDTO(){
         return repository.findAll().stream().map(pauta -> new PautaDTO(pauta)).collect(Collectors.toList());
+    }
+    public List<Pauta> findAllPautas(){
+        return repository.findAll();
     }
 
     public PautaDTO findById(Integer id){
@@ -31,11 +34,6 @@ public class PautaService {
 
     public Pauta findRealById(Integer id){
         return repository.findById(id).orElse(null);
-    }
-
-    public void saveSessionInPauta(Pauta pauta, SessionVote sessionVote){
-        pauta.setSessionVote(sessionVote);
-        repository.save(pauta);
     }
 
     public Pauta createPauta(PautaDTO PautaDTO){

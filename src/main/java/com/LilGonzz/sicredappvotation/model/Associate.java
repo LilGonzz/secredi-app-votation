@@ -3,11 +3,15 @@ package com.LilGonzz.sicredappvotation.model;
 import com.LilGonzz.sicredappvotation.model.DTOs.AssociateDTO;
 import com.LilGonzz.sicredappvotation.model.abstractClasses.BaseClass;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Data
@@ -15,6 +19,8 @@ import java.util.Objects;
 public class Associate extends BaseClass {
     private String fullName;
     private String document;
+    @OneToMany(mappedBy = "associate")
+    private Set<Vote> votes;
 
     public Associate(Integer id, String fullName, String document){
         super(id, LocalDateTime.now(), true, null);

@@ -18,7 +18,7 @@ public class SessionVoteResource {
     SessionVoteService service;
     @GetMapping
     public ResponseEntity<List<SessionVoteDTO>> getAllSessionVote(){
-            List<SessionVoteDTO> SessionVotes = service.getAllSessionVote();
+            List<SessionVoteDTO> SessionVotes = service.getAllSessionVoteActiveDTO();
             return ResponseEntity.ok(SessionVotes);
     }
 

@@ -5,14 +5,17 @@ import com.LilGonzz.sicredappvotation.model.abstractClasses.BaseClass;
 import com.LilGonzz.sicredappvotation.utils.exceptions.GenericDateException;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class SessionVote extends BaseClass {
 
@@ -21,9 +24,11 @@ public class SessionVote extends BaseClass {
     private Long totalVotes;
     private Long totalYes;
     private Long totalNo;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "pauta_id")
     private Pauta pauta;
+    @OneToMany(mappedBy = "session")
+    private List<Vote> votes;
 
 
     public SessionVote(Integer id, String description, LocalDateTime limitDate, Long totalVotes, Long totalYes, Long totalNo, Pauta pauta) {
@@ -55,4 +60,5 @@ public class SessionVote extends BaseClass {
 
         return limitDate;
     }
+
 }

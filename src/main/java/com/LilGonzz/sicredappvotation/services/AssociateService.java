@@ -20,8 +20,11 @@ public class AssociateService {
     @Autowired
     AssociateRepository repository;
 
-    public List<AssociateDTO> getAllAssociate(){
+    public List<AssociateDTO> getAllAssociateDTO(){
         return repository.findAll().stream().map(associate -> new AssociateDTO(associate)).collect(Collectors.toList());
+    }
+    public List<Associate> getAllAssociate(){
+        return repository.findAll();
     }
 
     public AssociateDTO getAssociateById(Integer id){
