@@ -28,8 +28,8 @@ public class SessionVoteResource {
             return ResponseEntity.ok(SessionVote);
     }
     @PostMapping
-    public ResponseEntity<SessionVote> createSessionVote(@RequestBody final SessionVoteDTO SessionVoteDto){
-        SessionVote SessionVote = service.createSessionVote(SessionVoteDto);
+    public ResponseEntity<SessionVoteDTO> createSessionVote(@RequestBody final SessionVoteDTO SessionVoteDto){
+        SessionVoteDTO SessionVote = service.createSessionVote(SessionVoteDto);
         URI uri = URI.create("/session-vote/" + SessionVote.getId());
         return ResponseEntity.created(uri).body(SessionVote);
     }

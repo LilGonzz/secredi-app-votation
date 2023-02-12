@@ -36,10 +36,11 @@ public class PautaService {
         return repository.findById(id).orElse(null);
     }
 
-    public Pauta createPauta(PautaDTO PautaDTO){
-        PautaDTO.setId(null);
-        Pauta Pauta = new Pauta(PautaDTO);
-        return repository.save(Pauta);
+    public PautaDTO createPauta(PautaDTO pautaDTO){
+        pautaDTO.setId(null);
+        Pauta pauta = new Pauta(pautaDTO);
+        repository.save(pauta);
+        return convertToDto(pauta);
     }
 
     public PautaDTO softDeletePauta(Integer id){
