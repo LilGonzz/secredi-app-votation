@@ -1,4 +1,4 @@
-package com.LilGonzz.sicredappvotation.cron;
+package com.LilGonzz.sicredappvotation.utils.cron;
 
 import com.LilGonzz.sicredappvotation.model.SessionVote;
 import com.LilGonzz.sicredappvotation.services.SessionVoteService;

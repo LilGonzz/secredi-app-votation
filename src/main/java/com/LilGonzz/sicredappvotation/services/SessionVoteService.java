@@ -31,6 +31,10 @@ public class SessionVoteService {
         SessionVote SessionVote = repository.findById(id).orElseThrow( () -> new GenericNotFoundException("not found SessionVote with id: "+ id));
         return convertToDto(SessionVote);
     }
+    public SessionVote getActiveSessionVoteById(Integer id){
+        SessionVote sessionVote = repository.findByIdAndIsActive(id, true);
+        return sessionVote;
+    }
 
     public SessionVote createSessionVote(SessionVoteDTO dto){
         Pauta pauta = pautaService.findRealById(dto.getPautaId());
@@ -65,7 +69,7 @@ public class SessionVoteService {
         }
 
     }
-    private SessionVoteDTO convertToDto(SessionVote SessionVote){
-        return new SessionVoteDTO(SessionVote.getId(), SessionVote.getDescription(), SessionVote.getLimitDate(), SessionVote.getTotalVotes(), SessionVote.getTotalYes(), SessionVote.getTotalNo(), SessionVote.getPauta().getId());
+    private SessionVoteDTO convertToDto(SessionVote sessionVote){
+        return new SessionVoteDTO(sessionVote);
     }
 }

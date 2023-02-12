@@ -3,6 +3,7 @@ package com.LilGonzz.sicredappvotation.model;
 import com.LilGonzz.sicredappvotation.model.DTOs.SessionVoteDTO;
 import com.LilGonzz.sicredappvotation.model.abstractClasses.BaseClass;
 import com.LilGonzz.sicredappvotation.utils.exceptions.GenericDateException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -27,8 +29,12 @@ public class SessionVote extends BaseClass {
     @OneToOne
     @JoinColumn(name = "pauta_id")
     private Pauta pauta;
+    @JsonIgnore
     @OneToMany(mappedBy = "session")
     private List<Vote> votes;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "sessions")
+    private Set<Associate> associates;
 
 
     public SessionVote(Integer id, String description, LocalDateTime limitDate, Long totalVotes, Long totalYes, Long totalNo, Pauta pauta) {

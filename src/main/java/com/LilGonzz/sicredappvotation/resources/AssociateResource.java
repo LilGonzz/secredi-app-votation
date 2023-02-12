@@ -27,7 +27,7 @@ public class AssociateResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<AssociateDTO> getAssociateById(@PathVariable final Integer id){
-            AssociateDTO associate = service.getAssociateById(id);
+            AssociateDTO associate = service.getAssociateByIdDTO(id);
             return ResponseEntity.ok(associate);
     }
     @PostMapping

@@ -53,7 +53,7 @@ public class PautaService {
         repository.deleteById(id);
     }
     private PautaDTO convertToDto(Pauta pauta){
-        return new PautaDTO(pauta.getId(), pauta.getPautaName(), pauta.getDescription());
+        return new PautaDTO(pauta);
     }
 
 }

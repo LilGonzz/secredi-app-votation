@@ -2,11 +2,12 @@ package com.LilGonzz.sicredappvotation.model;
 
 import com.LilGonzz.sicredappvotation.model.DTOs.AssociateDTO;
 import com.LilGonzz.sicredappvotation.model.abstractClasses.BaseClass;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,13 +15,21 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Associate extends BaseClass {
     private String fullName;
     private String document;
+    @JsonIgnore
     @OneToMany(mappedBy = "associate")
     private Set<Vote> votes;
+    @ManyToMany
+    @JoinTable(
+            name = "associates_and_sessions",
+            joinColumns = @JoinColumn(name = "session_id"),
+            inverseJoinColumns = @JoinColumn(name = "associate_id"))
+    private Set<SessionVote> sessions;
 
     public Associate(Integer id, String fullName, String document){
         super(id, LocalDateTime.now(), true, null);
