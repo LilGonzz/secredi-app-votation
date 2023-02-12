@@ -24,8 +24,8 @@ public class VoteResource {
         return ResponseEntity.ok(votes);
     }
     @PostMapping
-    public ResponseEntity<Vote> voteInSession(@RequestBody VoteDTO dto){
-        Vote vote = service.voteInSession(dto);
+    public ResponseEntity<VoteDTO> voteInSession(@RequestBody VoteDTO dto){
+        VoteDTO vote = service.voteInSession(dto);
         return ResponseEntity.ok(vote);
     }
 }

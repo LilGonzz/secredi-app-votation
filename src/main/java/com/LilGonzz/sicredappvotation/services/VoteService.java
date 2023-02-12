@@ -42,7 +42,7 @@ public class VoteService {
 
         return votes.stream().map(vote -> new VoteDTO(vote)).collect(Collectors.toList());
     }
-    public Vote voteInSession(VoteDTO dto){
+    public VoteDTO voteInSession(VoteDTO dto){
         SessionVote sessionVote = sessionService.getActiveSessionVoteById(dto.getSessionVoteId());
         if(sessionVote == null)
             throw new GenericNotFoundException("sessão não encontrada ou já foi finalizada");
@@ -53,7 +53,8 @@ public class VoteService {
         vote.setAssociate(associate);
         associate.getSessions().add(sessionVote);
         sessionVote.getAssociates().add(associate);
-        return repository.save(vote);
+        repository.save(vote);
+        return convertToDto(vote);
     }
     private VoteDTO convertToDto(Vote vote){
         return new VoteDTO(vote);
