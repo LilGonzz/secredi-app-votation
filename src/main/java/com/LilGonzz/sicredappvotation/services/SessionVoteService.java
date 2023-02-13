@@ -7,6 +7,9 @@ import com.LilGonzz.sicredappvotation.repositories.SessionVoteRepository;
 import com.LilGonzz.sicredappvotation.utils.exceptions.GenericNotFoundException;
 import com.LilGonzz.sicredappvotation.utils.exceptions.PautaAlreadyInSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,6 +23,8 @@ public class SessionVoteService {
     SessionVoteRepository repository;
     @Autowired
     PautaService pautaService;
+    @Autowired
+    CacheManager cacheManager;
 
     public List<SessionVoteDTO> getAllSessionVoteActiveDTO(){
         return repository.findByIsActive(true).stream().map(SessionVote -> new SessionVoteDTO(SessionVote)).collect(Collectors.toList());
@@ -31,7 +36,9 @@ public class SessionVoteService {
         SessionVote SessionVote = repository.findById(id).orElseThrow( () -> new GenericNotFoundException("not found SessionVote with id: "+ id));
         return convertToDto(SessionVote);
     }
+    @Cacheable(cacheNames = "SessionVoteActive", key = "#id")
     public SessionVote getActiveSessionVoteById(Integer id){
+        System.out.println("pegando do banco");
         SessionVote sessionVote = repository.findByIdAndIsActive(id, true);
         return sessionVote;
     }
@@ -49,7 +56,7 @@ public class SessionVoteService {
         repository.save(sessionVote);
         return convertToDto(sessionVote);
     }
-
+    @CacheEvict(cacheNames = "SessionVoteActive", key = "#id")
     public SessionVoteDTO softDeleteSessionVote(Integer id){
         SessionVote SessionVote = repository.findById(id).orElseThrow( () -> new GenericNotFoundException("doesn't exists SessionVote with id: "+ id));
         SessionVote.setIsActive(false);
@@ -57,11 +64,11 @@ public class SessionVoteService {
         SessionVoteDTO dto = new SessionVoteDTO(repository.save(SessionVote));
         return dto;
     }
-
     public void checkIfNotExpired(SessionVote session){
         if(session.getLimitDate().isBefore(LocalDateTime.now())){
             session.setIsActive(false);
             session.setDeletedAt(LocalDateTime.now());
+            cacheManager.getCache("SessionVoteActive").evict(session.getId());
             repository.save(session);
         }
 
