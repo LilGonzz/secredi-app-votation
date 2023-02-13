@@ -38,8 +38,8 @@ public class SessionVoteResource {
                     " só será criada se a pauta em questão não estiver com sessões atreladas a ela, mesmo se a sessão já estiver finalizada"
     )
     @PostMapping
-    public ResponseEntity<SessionVote> createSessionVote(@RequestBody final SessionVoteDTO SessionVoteDto){
-        SessionVote SessionVote = service.createSessionVote(SessionVoteDto);
+    public ResponseEntity<SessionVoteDTO> createSessionVote(@RequestBody final SessionVoteDTO SessionVoteDto){
+        SessionVoteDTO SessionVote = service.createSessionVote(SessionVoteDto);
         URI uri = URI.create("/session-vote/" + SessionVote.getId());
         return ResponseEntity.created(uri).body(SessionVote);
     }

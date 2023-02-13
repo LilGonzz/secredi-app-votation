@@ -36,8 +36,8 @@ public class PautaResources {
             description = "criará uma pauta na base de dados"
     )
     @PostMapping
-    public ResponseEntity<Pauta> createPauta(@RequestBody final PautaDTO dto){
-        Pauta pauta = service.createPauta(dto);
+    public ResponseEntity<PautaDTO> createPauta(@RequestBody final PautaDTO dto){
+        PautaDTO pauta = service.createPauta(dto);
         URI uri = URI.create("/pautas/" + pauta.getId());
         return ResponseEntity.created(uri).body(pauta);
     }

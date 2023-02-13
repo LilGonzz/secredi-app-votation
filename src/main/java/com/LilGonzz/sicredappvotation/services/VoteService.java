@@ -43,6 +43,7 @@ public class VoteService {
         return votes.stream().map(vote -> new VoteDTO(vote)).collect(Collectors.toList());
     }
     public VoteDTO voteInSession(VoteDTO dto){
+        dto.setId(null);
         SessionVote sessionVote = sessionService.getActiveSessionVoteById(dto.getSessionVoteId());
         if(sessionVote == null)
             throw new GenericNotFoundException("sessão não encontrada ou já foi finalizada");

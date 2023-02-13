@@ -36,7 +36,7 @@ public class SessionVoteService {
         return sessionVote;
     }
 
-    public SessionVote createSessionVote(SessionVoteDTO dto){
+    public SessionVoteDTO createSessionVote(SessionVoteDTO dto){
         Pauta pauta = pautaService.findRealById(dto.getPautaId());
         if(pauta == null){
            throw new GenericNotFoundException("não foi possível criar sessão pois não existe pauta com o id informado");
@@ -46,7 +46,8 @@ public class SessionVoteService {
         }
         dto.setId(null);
         SessionVote sessionVote = new SessionVote(dto, pauta);
-        return repository.save(sessionVote);
+        repository.save(sessionVote);
+        return convertToDto(sessionVote);
     }
 
     public SessionVoteDTO softDeleteSessionVote(Integer id){

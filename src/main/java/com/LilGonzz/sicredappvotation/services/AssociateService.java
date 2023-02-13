@@ -45,10 +45,11 @@ public class AssociateService {
         return associate;
     }
 
-    public Associate createAssociate(AssociateDTO associateDto){
+    public AssociateDTO createAssociate(AssociateDTO associateDto){
         associateDto.setId(null);
         Associate associate = new Associate(associateDto);
-        return repository.save(associate);
+        repository.save(associate);
+        return convertToDto(associate);
     }
 
     public AssociateDTO softDeleteAssociate(Integer id){

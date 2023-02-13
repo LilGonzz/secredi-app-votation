@@ -40,8 +40,8 @@ public class AssociateResource {
             description = "criará um associado na base de dados"
     )
     @PostMapping
-    public ResponseEntity<Associate> createAssociate(@RequestBody final AssociateDTO associateDto){
-        Associate associate = service.createAssociate(associateDto);
+    public ResponseEntity<AssociateDTO> createAssociate(@RequestBody final AssociateDTO associateDto){
+        AssociateDTO associate = service.createAssociate(associateDto);
         URI uri = URI.create("/associates/" + associate.getId());
         return ResponseEntity.created(uri).body(associate);
     }
