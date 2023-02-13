@@ -4,6 +4,7 @@ import com.LilGonzz.sicredappvotation.model.SessionVote;
 import com.LilGonzz.sicredappvotation.model.DTOs.SessionVoteDTO;
 import com.LilGonzz.sicredappvotation.services.SessionVoteService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class SessionVoteResource {
                     " só será criada se a pauta em questão não estiver com sessões atreladas a ela, mesmo se a sessão já estiver finalizada"
     )
     @PostMapping
-    public ResponseEntity<SessionVoteDTO> createSessionVote(@RequestBody final SessionVoteDTO sessionVoteDto){
+    public ResponseEntity<SessionVoteDTO> createSessionVote(@Valid @RequestBody final SessionVoteDTO sessionVoteDto){
         SessionVoteDTO sessionVote = service.createSessionVote(sessionVoteDto);
         URI uri = URI.create("/session-vote/" + sessionVote.getId());
         return ResponseEntity.created(uri).body(sessionVote);

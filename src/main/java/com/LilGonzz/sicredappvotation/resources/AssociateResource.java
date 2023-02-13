@@ -4,6 +4,7 @@ import com.LilGonzz.sicredappvotation.model.Associate;
 import com.LilGonzz.sicredappvotation.model.DTOs.AssociateDTO;
 import com.LilGonzz.sicredappvotation.services.AssociateService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class AssociateResource {
             description = "criará um associado na base de dados"
     )
     @PostMapping
-    public ResponseEntity<AssociateDTO> createAssociate(@RequestBody final AssociateDTO associateDto){
+    public ResponseEntity<AssociateDTO> createAssociate(@Valid @RequestBody final AssociateDTO associateDto){
         AssociateDTO associate = service.createAssociate(associateDto);
         URI uri = URI.create("/associates/" + associate.getId());
         return ResponseEntity.created(uri).body(associate);

@@ -4,6 +4,7 @@ import com.LilGonzz.sicredappvotation.model.DTOs.PautaDTO;
 import com.LilGonzz.sicredappvotation.model.Pauta;
 import com.LilGonzz.sicredappvotation.services.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class PautaResources {
             description = "criará uma pauta na base de dados"
     )
     @PostMapping
-    public ResponseEntity<PautaDTO> createPauta(@RequestBody final PautaDTO dto){
+    public ResponseEntity<PautaDTO> createPauta(@Valid  @RequestBody final PautaDTO dto){
         PautaDTO pauta = service.createPauta(dto);
         URI uri = URI.create("/pautas/" + pauta.getId());
         return ResponseEntity.created(uri).body(pauta);

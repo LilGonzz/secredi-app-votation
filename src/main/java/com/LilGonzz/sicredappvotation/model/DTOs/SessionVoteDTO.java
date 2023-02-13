@@ -2,7 +2,8 @@ package com.LilGonzz.sicredappvotation.model.DTOs;
 
 import com.LilGonzz.sicredappvotation.model.SessionVote;
 import com.LilGonzz.sicredappvotation.utils.exceptions.GenericDateException;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ public class SessionVoteDTO {
     private Long totalYes;
     private Long totalNo;
     private Boolean isActive;
+    @NotNull(message = "o id da pauta é necessário")
     private Integer pautaId;
 
     public SessionVoteDTO(Integer id, String description, String limitDate, Long totalVotes, Long totalYes, Long totalNo, Integer pautaId) {

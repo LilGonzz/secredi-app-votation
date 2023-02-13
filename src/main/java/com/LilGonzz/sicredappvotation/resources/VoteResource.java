@@ -4,6 +4,7 @@ import com.LilGonzz.sicredappvotation.model.DTOs.VoteDTO;
 import com.LilGonzz.sicredappvotation.model.Vote;
 import com.LilGonzz.sicredappvotation.services.VoteService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class VoteResource {
             description = "será feito um voto se caso o associado não tiver votado na sessão ainda e se a sessão estiver ativa"
     )
     @PostMapping
-    public ResponseEntity<VoteDTO> voteInSession(@RequestBody VoteDTO dto){
+    public ResponseEntity<VoteDTO> voteInSession(@Valid @RequestBody VoteDTO dto){
         VoteDTO vote = service.voteInSession(dto);
         return ResponseEntity.ok(vote);
     }
