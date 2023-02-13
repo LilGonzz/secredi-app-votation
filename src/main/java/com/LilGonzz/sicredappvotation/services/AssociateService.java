@@ -4,7 +4,6 @@ import com.LilGonzz.sicredappvotation.model.SessionVote;
 import com.LilGonzz.sicredappvotation.repositories.AssociateRepository;
 import com.LilGonzz.sicredappvotation.model.Associate;
 import com.LilGonzz.sicredappvotation.model.DTOs.AssociateDTO;
-import com.LilGonzz.sicredappvotation.repositories.SessionVoteRepository;
 import com.LilGonzz.sicredappvotation.utils.exceptions.AlreadyVoteException;
 import com.LilGonzz.sicredappvotation.utils.exceptions.GenericNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +21,8 @@ public class AssociateService {
 
     @Autowired
     AssociateRepository repository;
-    @Autowired
-    SessionVoteService sessionService;
-
     public List<AssociateDTO> getAllAssociateDTO(){
         return repository.findAll().stream().map(associate -> new AssociateDTO(associate)).collect(Collectors.toList());
-    }
-    public List<Associate> getAllAssociate(){
-        return repository.findAll();
     }
     public AssociateDTO getAssociateByIdDTO(Integer id){
         Associate associate = repository.findById(id).orElseThrow( () -> new GenericNotFoundException("not found associate with id: "+ id));
@@ -58,10 +51,6 @@ public class AssociateService {
         associate.setDeletedAt(LocalDateTime.now());
         AssociateDTO dto = new AssociateDTO(repository.save(associate));
         return dto;
-    }
-
-    public void hardDeleteAssociate(Integer id){
-        repository.deleteById(id);
     }
     private String canVote(String document){
         WebClient webClient = WebClient.create("https://user-info.herokuapp.com/users");

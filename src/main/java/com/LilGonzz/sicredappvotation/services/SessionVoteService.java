@@ -58,10 +58,6 @@ public class SessionVoteService {
         return dto;
     }
 
-    public void hardDeleteSessionVote(Integer id){
-        SessionVote SessionVote = repository.findById(id).orElseThrow( () -> new GenericNotFoundException("doesn't exists SessionVote with id: "+ id));
-        repository.deleteById(id);
-    }
     public void checkIfNotExpired(SessionVote session){
         if(session.getLimitDate().isBefore(LocalDateTime.now())){
             session.setIsActive(false);

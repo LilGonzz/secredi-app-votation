@@ -53,12 +53,4 @@ public class AssociateResource {
        AssociateDTO associate = service.softDeleteAssociate(id);
        return ResponseEntity.ok(associate);
     }
-    @Operation(
-            description = "deleterá o associado do banco de dados"
-    )
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> hardDeleteAssociate(@PathVariable final Integer id){
-        service.hardDeleteAssociate(id);
-        return ResponseEntity.noContent().build();
-    }
 }
