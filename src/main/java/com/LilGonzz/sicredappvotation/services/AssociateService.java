@@ -7,6 +7,9 @@ import com.LilGonzz.sicredappvotation.model.DTOs.AssociateDTO;
 import com.LilGonzz.sicredappvotation.utils.exceptions.AlreadyVoteException;
 import com.LilGonzz.sicredappvotation.utils.exceptions.GenericNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,7 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class AssociateService {
-
+    @Autowired
+    CacheManager cacheManager;
     @Autowired
     AssociateRepository repository;
     public List<AssociateDTO> getAllAssociateDTO(){
@@ -28,23 +32,26 @@ public class AssociateService {
         Associate associate = repository.findById(id).orElseThrow( () -> new GenericNotFoundException("not found associate with id: "+ id));
         return convertToDto(associate);
     }
-    public Associate canVoteById(Integer id, Integer sesionId){
-        Associate associate = repository.findByIdAndIsActive(id, true)
+    @Cacheable(cacheNames = "associate", key = "#id")
+    public Associate findByIdAndActive(Integer id){
+        return repository.findByIdAndIsActive(id, true)
                 .orElseThrow(() -> { throw new GenericNotFoundException("associado não encontrado"); });
+    }
+    public Associate canVoteById(Integer id, Integer sesionId){
+        Associate associate = findByIdAndActive(id);
         for (SessionVote sessionVote : associate.getSessions()){
             if(sessionVote.getId() == sesionId)
                 throw new AlreadyVoteException("associado já votou nessa sessão");
         }
         return associate;
     }
-
     public AssociateDTO createAssociate(AssociateDTO associateDto){
         associateDto.setId(null);
         Associate associate = new Associate(associateDto);
         repository.save(associate);
         return convertToDto(associate);
     }
-
+    @CacheEvict(cacheNames = "associate", key = "#id")
     public AssociateDTO softDeleteAssociate(Integer id){
         Associate associate = repository.findById(id).orElseThrow( () -> new GenericNotFoundException("doesn't exists associate with id: "+ id));
         associate.setIsActive(false);
