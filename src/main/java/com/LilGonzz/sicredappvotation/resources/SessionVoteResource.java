@@ -51,12 +51,4 @@ public class SessionVoteResource {
        SessionVoteDTO SessionVote = service.softDeleteSessionVote(id);
        return ResponseEntity.ok(SessionVote);
     }
-    @Operation(
-            description = "deleterá a sessão de votação do banco de dados"
-    )
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> hardDeleteSessionVote(@PathVariable final Integer id){
-        service.hardDeleteSessionVote(id);
-        return ResponseEntity.noContent().build();
-    }
 }

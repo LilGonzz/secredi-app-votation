@@ -50,9 +50,6 @@ public class PautaService {
         PautaDTO dto = new PautaDTO(repository.save(Pauta));
         return dto;
     }
-    public void hardDeletePauta(Integer id){
-        repository.deleteById(id);
-    }
     private PautaDTO convertToDto(Pauta pauta){
         return new PautaDTO(pauta);
     }

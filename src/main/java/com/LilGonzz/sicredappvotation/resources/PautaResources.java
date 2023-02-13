@@ -49,12 +49,4 @@ public class PautaResources {
         service.softDeletePauta(id);
         return ResponseEntity.noContent().build();
     }
-    @Operation(
-            description = "deleterá a pauta do banco de dados"
-    )
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> hardDeletePauta(@PathVariable final Integer id){
-        service.hardDeletePauta(id);
-        return ResponseEntity.noContent().build();
-    }
 }
